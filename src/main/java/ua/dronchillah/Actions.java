@@ -56,6 +56,32 @@ public class Actions {
         viewAllEntries();
     }
 
+    protected static void update(int id, String option, String value){
+        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/main?serverTimezone=UTC",
+                "root", "PizzaEater228")){
+            PreparedStatement createStatement;
+            switch (option) {
+                case "username":
+                    createStatement = connection.prepareStatement("UPDATE main.users SET username = ? WHERE id = ?");
+                    break;
+                case "password":
+                    createStatement = connection.prepareStatement("UPDATE main.users SET password = ? WHERE id = ?");
+                    break;
+                case "email":
+                    createStatement = connection.prepareStatement("UPDATE main.users SET email = ? WHERE id = ?");
+                    break;
+                default:
+                    throw new SQLException();
+            }
+            createStatement.setString(1, value);
+            createStatement.setString(2, id + "");
+            createStatement.execute();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        viewCurrentEntry(id);
+    }
+
     protected static void delete(int i){
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/main?serverTimezone=UTC",
                 "root", "PizzaEater228")){
@@ -81,25 +107,5 @@ public class Actions {
 
     }
 
-    protected static void update(int id, String option, String value){
-        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/main?serverTimezone=UTC",
-                "root", "PizzaEater228")){
-            PreparedStatement createStatement;
-            if(option.equals("username")){
-                createStatement = connection.prepareStatement("UPDATE main.users SET username = ? WHERE id = ?");
-            } else if (option.equals("password")){
-                createStatement = connection.prepareStatement("UPDATE main.users SET password = ? WHERE id = ?");
-            } else if (option.equals("email")){
-                createStatement = connection.prepareStatement("UPDATE main.users SET email = ? WHERE id = ?");
-            } else {
-                throw new SQLException();
-            }
-            createStatement.setString(1, value);
-            createStatement.setString(2, id + "");
-            createStatement.execute();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-        viewCurrentEntry(id);
-    }
+
 }

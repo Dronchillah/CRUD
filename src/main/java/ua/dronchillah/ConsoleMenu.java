@@ -41,10 +41,6 @@ public class ConsoleMenu {
             }
     }
 
-    private static void viewAllEntries() {
-        Actions.viewAllEntries();
-    }
-
     private static void create() {
         System.out.println("Input username:");
         String username = scan.nextLine();
@@ -101,6 +97,10 @@ public class ConsoleMenu {
         System.out.println("Input id of user you want to delete:");
         Actions.delete(checkId(scan.nextLine()));
 
+    }
+
+    private static void viewAllEntries() {
+        Actions.viewAllEntries();
     }
 
     private static String checkEmail(String str) {
