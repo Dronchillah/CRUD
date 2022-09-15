@@ -1,6 +1,5 @@
 package ua.dronchillah;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class ConsoleMenu {
@@ -48,6 +47,7 @@ public class ConsoleMenu {
         String password = scan.nextLine();
         System.out.println("Input email:");
         String email = checkEmail(scan.nextLine());
+        /*String email = scan.nextLine();*/
         Actions.create(username, password, email);
     }
 
@@ -105,7 +105,7 @@ public class ConsoleMenu {
 
     private static String checkEmail(String str) {
         String temp;
-        try (Scanner scan = new Scanner(System.in)) {
+        try /*(Scanner scan = new Scanner(System.in))*/ {
             if (str.matches("[a-zA-Z\\d]+@[a-z]+\\.[a-z]+")) {
                 return str;
             } else {
@@ -117,7 +117,10 @@ public class ConsoleMenu {
                     }
                 }
             }
+        }catch (Exception ignored) {
+
         }
+        return null;
     }
 
     private static int checkId(String id){
